@@ -1,0 +1,196 @@
+/* ✅ Global */
+body {
+    font-family: "Kanit", sans-serif;
+    margin: 0;
+    background: #f3f6fa;
+    color: #222;
+}
+
+.container {
+    max-width: 1080px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ✅ Header */
+.topbar {
+    background: #0a4b78;
+    color: white;
+    padding: 14px 0;
+}
+.topbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+.topbar nav {
+    margin-top: 6px;
+}
+.topbar nav a {
+    color: #dceeff;
+    margin-right: 14px;
+    text-decoration: none;
+    font-weight: 600;
+}
+.topbar nav a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ Footer */
+.footer {
+    background: #0a4b78;
+    color: #eee;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* ✅ Card UI */
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+}
+
+/* ✅ Form */
+input[type=text],
+input[type=file] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccd4dd;
+    margin-bottom: 12px;
+}
+
+.btn {
+    background: #124e85;
+    border: none;
+    padding: 11px 18px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn:hover {
+    background: #186bb8;
+}
+.btn-primary {
+    background: #007df2;
+}
+.btn-primary:hover {
+    background: #0064c7;
+}
+
+/* ✅ Flash message */
+.flash-wrap {
+    margin-bottom: 10px;
+}
+.flash {
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.flash.success {
+    background: #d7f7db;
+    color: #0a6b1a;
+}
+.flash.error {
+    background: #ffd4d4;
+    color: #a30000;
+}
+
+/* ✅ Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th {
+    background: #0a4b78;
+    color: white;
+    padding: 8px;
+}
+.table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+.table tbody tr:nth-child(even) {
+    background: #eef6ff;
+}
+
+/* ✅ PASS / FAIL Badge */
+.badge-pass {
+    font-weight: bold;
+    padding: 6px 10px;
+    display: inline-block;
+    background: #2ecc71;
+    color: white;
+    border-radius: 6px;
+}
+.badge-fail {
+    font-weight: bold;
+    padding: 6px 10px;
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    border-radius: 6px;
+}
+
+.big {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Hide element */
+.hide { display: none; }
+
+/* ✅ Preview Image */
+.preview-wrap {
+    margin: 10px 0;
+    text-align: center;
+}
+.preview-img {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #9dc8f2;
+}
+
+/* ✅ Scan Layout */
+.grid-2 {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.grid-2 > div {
+    flex: 1 1 340px;
+}
+video {
+    width: 100%;
+    max-width: 480px;
+    border-radius: 8px;
+    border: 2px solid #195c8f;
+}
+.result-box {
+    min-height: 130px;
+    background: #eef6ff;
+    border: 1px solid #c1daff;
+    border-radius: 8px;
+    padding: 12px;
+}
+.actions {
+    margin-top: 10px;
+}
+
+/* ✅ Images inside history */
+img.history-img {
+    width: 110px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+@media (max-width:600px) {
+    .table td, .table th {
+        font-size: 12px;
+    }
+}

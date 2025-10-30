@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="card">
+  <h2>ลงทะเบียนป้ายทะเบียน</h2>
+
+  <!-- ✅ Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-wrap">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" enctype="multipart/form-data" class="form">
+    <label>ชื่อเจ้าของ</label>
+    <input type="text" name="owner" required placeholder="เช่น นายสมชาย ใจดี">
+
+    <label>เลขทะเบียน</label>
+    <input type="text" name="plate" required placeholder="เช่น กข 1234 กรุงเทพ">
+
+    <label>อัปโหลดรูปภาพป้ายทะเบียน</label>
+    <input type="file" name="image" id="image" accept="image/*" required>
+
+    <!-- ✅ Preview รูป -->
+    <div id="previewWrap" class="preview-wrap">
+      <img id="previewImg" src="" alt="" class="hide preview-img">
+    </div>
+
+    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+  </form>
+</section>
+
+<script>
+// ✅ preview image ก่อนบันทึก
+const fileInput = document.getElementById("image");
+const previewImg = document.getElementById("previewImg");
+
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    previewImg.src = e.target.result;
+    previewImg.classList.remove("hide");
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+{% endblock %}

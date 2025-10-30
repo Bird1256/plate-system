@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="card">
+  <h2>สแกนด้วยกล้องหน้าเว็บ</h2>
+
+  <div class="grid-2">
+    <div>
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas" class="hide"></canvas>
+      <div class="actions">
+        <button id="btnStart" class="btn">เปิดกล้อง</button>
+        <button id="btnSnap" class="btn btn-primary" disabled>จับภาพและตรวจสอบ</button>
+      </div>
+    </div>
+
+    <div>
+      <h3>ผลลัพธ์</h3>
+      <div id="resultBox" class="result-box">ยังไม่ได้ตรวจ</div>
+      <div id="snapshotWrap"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const btnStart = document.getElementById('btnStart');
+const btnSnap = document.getElementById('btnSnap');
+const resultBox = document.getElementById('resultBox');
+const snapshotWrap = document.getElementById('snapshotWrap');
+
+let stream = null;
+
+// ✅ เปิดกล้อง
+btnStart.onclick = async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" }
+    });
+    video.srcObject = stream;
+    btnSnap.disabled = false;
+  } catch (err) {
+    alert("เปิดกล้องไม่สำเร็จ: " + err);
+  }
+};
+
+// ✅ จับภาพ + ส่งตรวจ API
+btnSnap.onclick = async () => {
+  const w = video.videoWidth;
+  const h = video.videoHeight;
+  canvas.width = w;
+  canvas.height = h;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, w, h);
+
+  const base64Image = canvas.toDataURL("image/jpeg", 0.95);
+  resultBox.textContent = "กำลังตรวจสอบ...";
+
+  const res = await fetch("{{ url_for('api_scan') }}", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: base64Image })
+  });
+
+  const js = await res.json();
+
+  if (!js.ok) {
+    resultBox.innerHTML = `<span style='color:red'>เกิดข้อผิดพลาด:</span> ${js.error}`;
+    return;
+  }
+
+  const badge = js.result === "PASS" ? "badge-pass" : "badge-fail";
+  resultBox.innerHTML = `
+    <div class="big ${badge}">${js.result}</div>
+    <p><b>ตรวจพบข้อความ (raw):</b> ${js.detected_raw}</p>
+    <p><b>แปลงเทียบ (norm):</b> ${js.detected_norm}</p>
+    <p><b>เจ้าของที่ match:</b> ${js.matched_owner || '-'}</p>
+  `;
+
+  snapshotWrap.innerHTML = `
+    <p><b>ภาพที่บันทึก:</b></p>
+    <img src="${js.snapshot_url}" style="width:100%;max-width:350px;border-radius:10px;">
+  `;
+};
+</script>
+{% endblock %}

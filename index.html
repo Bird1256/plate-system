@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="card">
+  <h2>ยินดีต้อนรับ</h2>
+  <p>ระบบควบคุมด่านผ่านทางด้วย <strong>การตรวจป้ายทะเบียนจากกล้องหน้าเว็บ</strong> + เทียบกับฐานข้อมูลที่ลงทะเบียนไว้</p>
+  <ul>
+    <li>ลงทะเบียน: กรอกทะเบียน, ชื่อเจ้าของ และอัปโหลดรูปป้าย</li>
+    <li>สแกน: เปิดกล้องจากเบราว์เซอร์ กด “จับภาพและตรวจสอบ”</li>
+    <li>ผลลัพธ์: อนุมัติ (<b>PASS</b>) หรือ ไม่อนุมัติ (<b>FAIL</b>)</li>
+    <li>บันทึกประวัติแยกไฟล์: <code>passes.csv</code> / <code>fails.csv</code></li>
+  </ul>
+
+  <div class="actions">
+    <a class="btn" href="{{ url_for('register') }}">เริ่มลงทะเบียน</a>
+    <a class="btn btn-primary" href="{{ url_for('scan_page') }}">สแกนด้วยกล้อง</a>
+    <a class="btn" href="{{ url_for('history') }}">ดูประวัติ</a>
+  </div>
+</section>
+{% endblock %}

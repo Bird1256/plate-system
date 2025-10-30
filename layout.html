@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>License Plate Gate</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>🚘 License Plate Gate</h1>
+      <nav>
+        <a href="{{ url_for('index') }}">หน้าหลัก</a>
+        <a href="{{ url_for('register') }}">ลงทะเบียน</a>
+        <a href="{{ url_for('scan') }}">สแกนด้วยกล้อง</a>
+        <a href="{{ url_for('history') }}">ประวัติ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>© {{ 2025 }} Plate Gate • OCR by EasyOCR (TH/EN)</small>
+    </div>
+  </footer>
+</body>
+</html>

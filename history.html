@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="card">
+  <h2>ประวัติ & ฐานข้อมูล</h2>
+
+  <h3>รายการลงทะเบียน (ฐานข้อมูล)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>เวลา</th>
+          <th>ทะเบียน (norm)</th>
+          <th>ทะเบียน (raw)</th>
+          <th>เจ้าของ</th>
+          <th>รูป</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in regs %}
+        <tr>
+          <td>{{ r.timestamp }}</td>
+          <td><code>{{ r.plate_norm }}</code></td>
+          <td>{{ r.plate_raw }}</td>
+          <td>{{ r.owner }}</td>
+          <td>
+            {% if r.image_path %}
+            <a href="/{{ r.image_path }}" target="_blank">เปิดรูป</a>
+            {% else %}-{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">ยังไม่มีข้อมูล</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ผ่าน (PASS)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>เวลา</th>
+          <th>ตรวจพบ (norm)</th>
+          <th>ตรวจพบ (raw)</th>
+          <th>ผล</th>
+          <th>เจ้าของที่ match</th>
+          <th>ภาพ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in passes %}
+        <tr>
+          <td>{{ r.timestamp }}</td>
+          <td><code>{{ r.plate_detected_norm }}</code></td>
+          <td>{{ r.plate_detected_raw }}</td>
+          <td><span class="badge-pass">PASS</span></td>
+          <td>{{ r.matched_owner }}</td>
+          <td>
+            {% if r.snapshot_path %}
+            <a href="/{{ r.snapshot_path }}" target="_blank">ดูภาพ</a>
+            {% else %}-{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">ยังไม่มีข้อมูล</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ไม่ผ่าน (FAIL)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>เวลา</th>
+          <th>ตรวจพบ (norm)</th>
+          <th>ตรวจพบ (raw)</th>
+          <th>ผล</th>
+          <th>เจ้าของที่ match</th>
+          <th>ภาพ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in fails %}
+        <tr>
+          <td>{{ r.timestamp }}</td>
+          <td><code>{{ r.plate_detected_norm }}</code></td>
+          <td>{{ r.plate_detected_raw }}</td>
+          <td><span class="badge-fail">FAIL</span></td>
+          <td>{{ r.matched_owner or '-' }}</td>
+          <td>
+            {% if r.snapshot_path %}
+            <a href="/{{ r.snapshot_path }}" target="_blank">ดูภาพ</a>
+            {% else %}-{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">ยังไม่มีข้อมูล</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
